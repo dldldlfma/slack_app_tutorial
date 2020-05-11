@@ -1,5 +1,5 @@
 dialog = {
-  "callback_id": "ryde-46e2b0",
+  "callback_id": "g_test_0",
   "title": "그로스팀 실험 템플릿",
   "submit_label": "Submit",
   "state": "Limo",
@@ -41,3 +41,30 @@ dialog = {
     }
   ]
 }
+
+
+"""
+dialog = {
+  "callback_id": "ryde-46e2b0",
+  "title": "your_app_dialog_templete",
+  "submit_label": "Submit",
+  "state": "Limo",
+  "elements": [
+    {
+      "type": "text",
+      "label": "제목",
+      "name": "text_0"
+    },
+    {
+      "type": "textarea",
+      "label": "라벨1",
+      "name": "text_1"
+    },
+    {
+      "type": "text",
+      "label": "라벨2",
+      "name": "text_2"
+    },
+  ]
+}
+"""
