@@ -1,7 +1,7 @@
 # slack_app_tutorial
 
 ## 미리 설치해야 되는 것들
-- npm
+- node.js
 - ngrok
 - flask
 - slacker
@@ -9,10 +9,22 @@
 
 ## 설치
 
-- npm 설치
+- [node.js 설치](https://nodejs.org/ko/)
+
 - ngrok 설치
+```
+npm install ngrok -g
+```
+
 - flask 설치
+```
+pip install flask
+```
+
 - slacker 설치
+```
+pip install slacker
+```
 
 - slack-client 설치
 ```
