@@ -95,3 +95,41 @@ ngrok http 80
 
 으로 열여줘야함
 
+## slack-client에서 dialog와 modals의 사용에 관한 내 생각
+
+직접 써보니까 slack-client가 에러 표현이 명확해서 더 좋은건 알겠다.  
+하지만 modal의 표현 방식이 dialog보다 직관적이지 않고 오히려 더 어렵다.  
+
+필요한 기존에 dialog는 channel에 대한 정보를 포함하여 json형태로 parsing해줬는데  
+
+modal은 parsing해주는 정보를 보면 channel 정보가 사라지고 더 복잡한 형태의 데이터가 넘어온다.   
+
+dialog를 계속 쓸수 있을지는 모르겠지만  
+만든다면 그냥 dialog를 쓰는게 좋을 것 같다는 생각이 계속 든다. 
+
+쓰는 방법을 정리해보자.
+
+### dialog 사용방식
+
+
+```python
+#dialog 사용방식
+open_dialog=slack_client.dialog_open(dialog=dialog,trigger_id=slack_event["trigger_id"])
+```
+
+### modal 사용방식
+
+modal은 정말 이상한게 쓰는걸 보면 modal이라고 이름 지어 놓고 열때는 view_open 이라는걸 사용해서 열도록 해놓았다.
+
+이게 좀 웃긴게 modal flow를 설명한 [link](https://api.slack.com/surfaces/modals/using)를 보면
+views를 열고  
+views를 update하고  
+view를 push하고  
+끝낸다는 뭔가 ... 복잡한 구조인데 
+
+확실히 잘 모르겠다 
+
+
+```python
+open_modal = slack_client.views_open(trigger_id=slack_event["trigger_id"],view=alp_modals)
+```

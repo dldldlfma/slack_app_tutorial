@@ -42,29 +42,87 @@ dialog = {
   ]
 }
 
-
-"""
-dialog = {
+alp_dialog = {
   "callback_id": "ryde-46e2b0",
-  "title": "your_app_dialog_templete",
+  "title": "Alp-Redmine Prj Builder",
   "submit_label": "Submit",
   "state": "Limo",
   "elements": [
     {
       "type": "text",
-      "label": "제목",
+      "label": "프로젝트 명",
       "name": "text_0"
     },
     {
       "type": "textarea",
-      "label": "라벨1",
+      "label": "프로젝트 설명",
       "name": "text_1"
     },
     {
-      "type": "text",
+      "type": "textarea",
       "label": "라벨2",
       "name": "text_2"
     },
+    
   ]
 }
-"""
+
+alp_modals={
+	"type": "modal",
+	"title": {
+		"type": "plain_text",
+		"text": "My App",
+		"emoji": True
+	},
+	"submit": {
+		"type": "plain_text",
+		"text": "제출",
+		"emoji": True
+	},
+	"close": {
+		"type": "plain_text",
+		"text": "취소",
+		"emoji": True
+	},
+	"blocks": [
+		{
+			"type": "input",
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "sl_input",
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Placeholder text for single-line input"
+				}
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "Label"
+			},
+			"hint": {
+				"type": "plain_text",
+				"text": "Hint text"
+			}
+		},
+		{
+			"type": "input",
+			"element": {
+				"type": "plain_text_input",
+				"action_id": "ml_input",
+				"multiline": True,
+				"placeholder": {
+					"type": "plain_text",
+					"text": "Placeholder text for multi-line input"
+				}
+			},
+			"label": {
+				"type": "plain_text",
+				"text": "Label"
+			},
+			"hint": {
+				"type": "plain_text",
+				"text": "Hint text"
+			}
+		}
+	]
+}
