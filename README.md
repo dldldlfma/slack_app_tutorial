@@ -1,10 +1,13 @@
 # slack_app_tutorial
 
+## 안되거나 막히는 내용이 있으면 그냥 바로 연락주세요!
+
+
 ## 미리 설치해야 되는 것들
 - node.js
 - ngrok
 - flask
-- slacker
+- ~~slacker~~
 - slack-client
 
 ## 설치
@@ -21,8 +24,9 @@ npm install ngrok -g
 pip install flask
 ```
 
-- slacker 설치
+- ~~slacker 설치~~
 ```
+#불필요한 설치 
 pip install slacker
 ```
 
@@ -31,34 +35,77 @@ pip install slacker
 pip install slackclient
 ```
 
+## 필요한것
+
+서버....
+
+
 
 ## 사용방법
 
 
-- 복잡하니 나중에 자세히 적자
-- 우선은 api.slack.com 인가 거기서 app 만들고 권한주고 
-- 통신할 수 있게 flask 서버 열고 거기에다가 @app.route("경로") 써서 명령 받을 수 있게 하고 
-- ngrok http 8080 해서 slack에서 내 컴퓨터로 접속할 수 있게 주소를 뚫는다.
-- 대충 뭐 그런방식으로 설계하고 하면된다. 
+- 우선은 [api.slack.com](https://api.slack.com/)에서 app 만들고 권한주기
+    - 필요한 권한들 선택해서 줘야한다.
+    
+    - 지금은 되는대로 다 주고 해봤는데 slack-client library를 사용하면 권한 설정 안했을때 어떤 권한이 필요한지 알려주기 때문에 최소 권한만 주고 수행해서 필요한 권한을 찾아서 추가하면 좋을것 같다. 
+
+
+- 통신할 수 있게 flask 서버 열고 거기에 @app.route("경로") 써서 명령 받을 수 있게 하기
+- ~~ngrok http 8080 해서 slack에서 내 컴퓨터로 접속할 수 있게 주소를 뚫는다.~~
+- server를 열어서 http 혹은 https로 접속할 수 있도록 한다.
+
+## 설정관련 사진
+
+### 설정 페이지
+
+![setting_page](./image/setting_page.png)
+
+
+### Slash Commands
+Slash Commands는 slack에서 어떤 /명령 을 사용하면 동작하게 할것이고 그것의 결과를 어디로 보낼것인지 설정하는 곳입니다. 
+
+```python
+@app.route("/slack/project", methods=["GET", "POST"])
+```
+
+main.py에는 위와 같이 **/slack/project**로 해두었는데 저건 맘대로 설정하셔도 됩니다. 
+
+![slash_command](./image/slash_cmd.png)
+
+
+![slash_cmd_set](./image/slash_cmd_set.png)
+
+
+### Interactive Components
+
+Interactive Components는 slack과 상호 동작해야 하는 경우  
+어떤 통로로 데이터를 주고 받을 것인지 결정하는 곳인데 main.py 코드에 보시면
+
+```python
+@app.route("/slack/interaction", methods=["GET", "POST"])
+```
+
+위 부분에 있는 내용을 설정하는 곳이라고 보시면 됩니다.  
+slash command를 통해서 dialog를 띄우도록 코드가 작성되어 있는데  
+
+dialog에서 send btn을 누르고 나서   
+그 결과를 어디로 받을건지를 설정하는 곳이라고 보시면 됩니다.
+
+
+### 권한 내역
+
+![auth](./image/auth.png)
+
+불 필요한 권한들은 지우고 사용하면 됩니다.
 
 
 
-
-## 이제 어떻게 할꺼야?
-
-- 고작 이거한다고 서버 해달라고 할 수 없으니 AWS에서 제공하는 공짜 서버를 쓸수는 없을까?
-- google은 공짜 서버 안주나?
-- 알아봐야지
 
 ## Error가 나면?
 
-slack-client로 갈아타야될거 같은게...
-
-slacker는 error를 너무 대충 알려줘...
+slacker는 error를 너무 대충 알려줌
 
 slack-client는 뭐가 문제인지도 알려줌
-
-postMessage 실행했는데 계속 안됬는데 보니까
 
 ### slacker Error 모습
 ```
@@ -71,40 +118,21 @@ slack.errors.SlackApiError: The request to the Slack API failed.
 The server responded with: {'ok': False, 'error': 'missing_scope', 'needed': 'chat:write:bot', 'provided': 'admin,identify,calls:write,calls:read'}
 ```
 
-### 아래 사진에 있는 chat:write 를 User Token Scopes에 추가해줘야 가능함
+### 위 에러를 확인하고 아래 사진에 있는 chat:write를 User Token Scopes에 추가해서 해결
 ![post_meg_error](./image/error.png)
 
 
-## Redmine과 연결하는 방법?
+## dialog와 modals의 사용에 관해서....
 
-외부에서 접속하게 하기 위해서
+modal의 표현 방식이 dialog보다 직관적이지 않고 오히려 더 어렵다.
 
-ngrok으로 서버를 두개 열어야됨
-
-하나는 slack과 연결하기 위한 것
-
-하나는 Redmine에 접속할 수 있게 하기 위한 것!
-
-Redmine은 기본적으로 80번 port로 열려 있음
-
-따라서 
-
-```
-ngrok http 80 
-```
-
-으로 열여줘야함
-
-## slack-client에서 dialog와 modals의 사용에 관한 내 생각
-
-직접 써보니까 slack-client가 에러 표현이 명확해서 더 좋은건 알겠다.  
-하지만 modal의 표현 방식이 dialog보다 직관적이지 않고 오히려 더 어렵다.  
+지금 만들어 놓은게 dialog 여서 인게 아니라 정말 넘어오는 데이터가 잘 정리 되어 있는것 같지는 않다. 
 
 필요한 기존에 dialog는 channel에 대한 정보를 포함하여 json형태로 parsing해줬는데  
 
 modal은 parsing해주는 정보를 보면 channel 정보가 사라지고 더 복잡한 형태의 데이터가 넘어온다.   
 
-dialog를 계속 쓸수 있을지는 모르겠지만  
+dialog를 계속 쓸 수 있을지는 모르겠지만  
 만든다면 그냥 dialog를 쓰는게 좋을 것 같다는 생각이 계속 든다. 
 
 쓰는 방법을 정리해보자.
@@ -131,5 +159,7 @@ view를 push하고
 
 
 ```python
-open_modal = slack_client.views_open(trigger_id=slack_event["trigger_id"],view=alp_modals)
+open_modal = slack_client.views_open(trigger_id=slack_event["trigger_id"],view=my_modals)
 ```
+---
+
